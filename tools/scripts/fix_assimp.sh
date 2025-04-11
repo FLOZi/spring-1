@@ -7,7 +7,7 @@ if [ ! -d code ]; then
 fi
 
 replace_func () {
-	sed -i 's/\([^:a-zA-Z0-9_]\|^\)std::\(fabs\|sin\|cos\|cos\|sinh\|cosh\|tan\|tanh\|asin\|acos\|atan\|atan2\|ceil\|floor\|fmod\|hypot\|pow\|log\|log10\|exp\|frexp\|ldexp\|isnan\|isinf\|isfinite\|sqrt\|isqrt\)\(f\|l\)\?\b/\1assimp_math::\2/g' $file
+	sed -i 's/\([^:a-zA-Z0-9_]\|^\)std::\(fabs\|sin\|cos\|cos\|sinh\|cosh\|tan\|tanh\|asin\|acos\|atan\|atan2\|ceil\|floor\|fmod\|hypot\|pow\|log\|log10\|exp\|frexp\|ldexp\|isnan\|isinf\|isfinite\|sqrt\|isqrt\|fpclassify\|is_close\)\(f\|l\)\?\b/\1assimp_math::\2/g' $file
 	sed -i 's/\([^:a-zA-Z0-9_]\|^\)\(fabs\|sin\|cos\|cos\|sinh\|cosh\|tan\|tanh\|asin\|acos\|atan\|atan2\|ceil\|floor\|fmod\|hypot\|pow\|log\|log10\|exp\|frexp\|ldexp\|isnan\|isinf\|isfinite\|sqrt\|isqrt\)\(f\|l\)\? *(/\1assimp_math::\2(/g' $file
 }
 

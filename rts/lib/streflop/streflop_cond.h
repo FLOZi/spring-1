@@ -158,27 +158,37 @@ namespace std {
 #include <type_traits>
 
 namespace assimp_math {
+	namespace Impl {
+		template<class T> inline bool epscmp(const T a, const T b, const T eps) {
+			return ((a == b) || (math::fabs(a - b) <= (eps * std::max(std::max(math::fabs(a), math::fabs(b)), T(1)))));
+		}
+	}
 
 #define ASSIMP_MATH_DEFINE_FUNC1F(FNAME)\
-template<typename F, typename = std::enable_if_t<std::is_floating_point_v<F>> >\
+template<typename F>\
 static inline float FNAME(F f) {\
+	static_assert(std::is_floating_point_v<F>);\
 	return math::FNAME(static_cast<float>(f));\
 }
 #define ASSIMP_MATH_DEFINE_FUNC2F(FNAME)\
-template<typename F, typename = std::enable_if_t<std::is_floating_point_v<F>> >\
+template<typename F>\
 static inline float FNAME(F f1, F f2) {\
+	static_assert(std::is_floating_point_v<F>);\
 	return math::FNAME(static_cast<float>(f1), static_cast<float>(f2));\
 }
 #define ASSIMP_MATH_DEFINE_FUNC1F1PI(FNAME)\
-template<typename F, typename = std::enable_if_t<std::is_floating_point_v<F>> >\
+template<typename F>\
 static inline float FNAME(F f, int* i) {\
+	static_assert(std::is_floating_point_v<F>);\
 	return math::FNAME(static_cast<float>(f), i);\
 }
 #define ASSIMP_MATH_DEFINE_FUNC1F1I(FNAME)\
-template<typename F, typename = std::enable_if_t<std::is_floating_point_v<F>> >\
+template<typename F>\
 static inline float FNAME(F f, int i) {\
+	static_assert(std::is_floating_point_v<F>);\
 	return math::FNAME(static_cast<float>(f), i);\
 }
+	ASSIMP_MATH_DEFINE_FUNC1F(fpclassify)
 
 	ASSIMP_MATH_DEFINE_FUNC1F(fabs)
 
@@ -220,7 +230,17 @@ static inline float FNAME(F f, int i) {\
 	ASSIMP_MATH_DEFINE_FUNC1F(isinf)
 	ASSIMP_MATH_DEFINE_FUNC1F(isfinite)
 
-#undef ASSIMP_MATH_DEFINE_FUNC1
+#undef ASSIMP_MATH_DEFINE_FUNC1F
+#undef ASSIMP_MATH_DEFINE_FUNC2F
+#undef ASSIMP_MATH_DEFINE_FUNC1F1PI
+#undef ASSIMP_MATH_DEFINE_FUNC1F1I
+
+	template<typename F1, typename F2>
+	static inline float is_close(F1 a, F2 b, F2 eps) {
+		static_assert(std::is_floating_point_v<F1>);
+		static_assert(std::is_floating_point_v<F2>);
+		return Impl::epscmp(static_cast<float>(a), static_cast<float>(b), static_cast<float>(eps));
+	}
 }
 
 #endif // STREFLOP_COND_H

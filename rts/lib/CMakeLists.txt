@@ -66,9 +66,16 @@ foreach(var ASSIMP_BUILD_STATIC_LIB ASSIMP_NO_EXPORT)
 	set("${var}" ON CACHE STRING "forced on by Recoil build env" FORCE)
 endforeach()
 
+set("ASSIMP_WARNINGS_AS_ERRORS" OFF CACHE BOOL "forced on by Recoil build env" FORCE)
+
 FIND_PACKAGE(ZLIB)
 IF (NOT ZLIB_FOUND)
 	set("ASSIMP_BUILD_ZLIB" ON CACHE BOOL "forced on by Recoil build env" FORCE)
+endif()
+
+FIND_PACKAGE(MiniZip)
+IF (NOT MiniZip_FOUND)
+	set("ASSIMP_BUILD_MINIZIP" ON CACHE BOOL "forced on by Recoil build env" FORCE)
 endif()
 
 
