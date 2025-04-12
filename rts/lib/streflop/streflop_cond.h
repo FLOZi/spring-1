@@ -156,6 +156,8 @@ namespace std {
 
 
 #include <type_traits>
+#include <algorithm>
+#include <cmath>
 
 namespace assimp_math {
 	namespace Impl {
@@ -188,8 +190,6 @@ static inline float FNAME(F f, int i) {\
 	static_assert(std::is_floating_point_v<F>);\
 	return math::FNAME(static_cast<float>(f), i);\
 }
-	ASSIMP_MATH_DEFINE_FUNC1F(fpclassify)
-
 	ASSIMP_MATH_DEFINE_FUNC1F(fabs)
 
 	ASSIMP_MATH_DEFINE_FUNC1F(sin)
@@ -240,6 +240,11 @@ static inline float FNAME(F f, int i) {\
 		static_assert(std::is_floating_point_v<F1>);
 		static_assert(std::is_floating_point_v<F2>);
 		return Impl::epscmp(static_cast<float>(a), static_cast<float>(b), static_cast<float>(eps));
+	}
+	template<typename F>
+	static inline int fpclassify(F v) {
+		static_assert(std::is_floating_point_v<F>);
+		return std::fpclassify(static_cast<float>(v));
 	}
 }
 

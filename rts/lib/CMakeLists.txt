@@ -73,11 +73,7 @@ IF (NOT ZLIB_FOUND)
 	set("ASSIMP_BUILD_ZLIB" ON CACHE BOOL "forced on by Recoil build env" FORCE)
 endif()
 
-FIND_PACKAGE(MiniZip)
-IF (NOT MiniZip_FOUND)
-	set("ASSIMP_BUILD_MINIZIP" ON CACHE BOOL "forced on by Recoil build env" FORCE)
-endif()
-
+set("ASSIMP_BUILD_MINIZIP" ON CACHE BOOL "forced on by Recoil build env" FORCE)
 
 set(CMAKE_CXX_FLAGS_ORIG ${CMAKE_CXX_FLAGS})
 if (CMAKE_COMPILER_IS_GNUCXX)
